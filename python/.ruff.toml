@@ -1,0 +1,14 @@
+# Exclude vendored package.
+extend-exclude = ["ed25519lab/**"]
+
+[lint]
+# Pin the pre-0.16 default rule set; ruff 0.16.0 expanded the defaults.
+select = ["E4", "E7", "E9", "F"]
+extend-ignore = [
+  # We catch "Exception" for good reasons.
+  "BLE001",
+  # Too many false positives (https://github.com/astral-sh/ruff/issues/7847).
+  "B023",
+  # We sort __all__ manually.
+  "RUF022",
+]

@@ -1,0 +1,48 @@
+{
+    "description": [
+        "Test vectors for hostpubkey_gen(hostseckey).",
+        "Generates a 32-byte public key (RFC 8032 encoding) from a 32-byte host secret key.",
+        "",
+        "For each valid test case:",
+        "  Call hostpubkey_gen(hostseckey) and verify the result equals expectedHostpubkey.",
+        "",
+        "For each error test case:",
+        "  Call hostpubkey_gen(hostseckey) and verify it raises an exception matching expectedError.",
+        "  The expectedError object contains 'type' (the exception class name)."
+    ],
+    "totalTests": 4,
+    "validTestCases": [
+        {
+            "tcId": 1,
+            "hostseckey": "631C047D50A67E45E27ED1FF25FCE179CAF059A2120D346ACD9774C1F2BAB60F",
+            "expectedHostpubkey": "66DE5E73C238DDBA28D79A1C5BD41713DED28333A1775686C274C305CA6B7AF8",
+            "comment": "valid host secret key"
+        }
+    ],
+    "errorTestCases": [
+        {
+            "tcId": 2,
+            "hostseckey": "631C047D50A67E45E27ED1FF25FCE179",
+            "expectedError": {
+                "type": "ValueError"
+            },
+            "comment": "length of host secret key is not 32 bytes"
+        },
+        {
+            "tcId": 3,
+            "hostseckey": "EDD3F55C1A631258D69CF7A2DEF9DE1400000000000000000000000000000010",
+            "expectedError": {
+                "type": "HostSeckeyError"
+            },
+            "comment": "host secret key is out of range"
+        },
+        {
+            "tcId": 4,
+            "hostseckey": "0000000000000000000000000000000000000000000000000000000000000000",
+            "expectedError": {
+                "type": "HostSeckeyError"
+            },
+            "comment": "zeroed host secret key"
+        }
+    ]
+}

@@ -1,0 +1,989 @@
+{
+    "description": [
+        "Test vectors for coordinator_step1(pmsgs1, params).",
+        "Aggregates participant round-1 messages and produces the coordinator's broadcast message (cmsg1).",
+        "",
+        "Assemble the pmsgs1 list from pmsg1Pool using pmsg1Indices:",
+        "  pmsgs1 = [pmsg1Pool[i] for i in pmsg1Indices]",
+        "  Pool entries at indices 0..n-1 are well-formed messages; higher indices may be malformed.",
+        "",
+        "For each valid test case:",
+        "  Call coordinator_step1(pmsgs1, params).",
+        "  Verify the returned cmsg1 equals expectedCmsg1.",
+        "",
+        "For each error test case:",
+        "  Call coordinator_step1(pmsgs1, params).",
+        "  Verify it raises an exception matching expectedError.",
+        "  Error objects may include 'participantId' (identifier of the blamed participant)."
+    ],
+    "totalTests": 44,
+    "testGroups": [
+        {
+            "pmsg1Pool": [
+                "F759A1B82DA70CD4FBF479150DD7964F1625276B5A3DBAE86128A5CC4C5E70E9C16C5FF7AA35F4FC8FE38FCADF9B7993A9887BD09BF8277645C6C29BEE08ACCEC4DD54D89074CED372A4C27D17454F10CE0B7E6B053562066B2D779FF1C9E5438B3FE2227D24A9C2B2288FBB58B48384F05725E963FD014873AF7F71A7559D0B2F4A5E9F961A7163EF86BFC78418F065746E2ED0D201272FD2F08C8AB73B0946C1979808658A48F6DC42527476115678BFCDBA677C904E31D97CF90558898A0799D77C1207B8F9D9ED76CDA21DC356046DAE6BD99DEF12931D6786C0ECF0D60EBFA3E8B62320A7FD6530C8DE71BDC158A3F9E6A4B8D390F413794B84B472CC02",
+                "7389445FCF5A6318C06001CB53EC083631E6EBF23D42CCD932341A10100A7B65573624107AAA2574B140AEF8A4A4BB116F54886DB3C964DE11A106EE0D38A1D2CC82E81D9463732D48194346AEF320A42A59AB9464ECF14B7D1033C18514A535580EEAD3C4F68F91E8564F57723EF0B19D06C918551D67ABB31757817EC96F074C4B48AC5E66665EBD12066946A68102FC044121E04AE18161760543D3944C26F2449491FA407D99ADB99F9142E13E66DA8AD344A0238FEAF34C4F32A859D30E11903566530FD66D6888FD11936FDCB7509D1CF3193914780171179BB0A77A0331F792B0033B7EDAE6BC533F9F6004FCE28E27DB5874ADA7A5FA56D1B8474501",
+                "B6E7CCA235B80B3FF0C927482A4A670CE43200F75B40CB5094F3FBFE392D35C52537375090C10C869D10E4FDFB6E4EA553928CF46E0E9E845B7DA9E61908527CD73508C09CBEB65E054CF20BE3656D247C13203E8E82A98C607D44F92BE166B3321C8C9F93BCEDD32010065724146F688A93B045A40A5907AA8732AC8580D80B3B5F4C6F311764F141B9801D1FF118DE28B404B17F04F092E909641352221C238A105F77048B8B8E66A0B31BD43F63100365C24B9BA127672E3011E9B804D10114C3E688B5266D9EEF269BAA2263F564B4DFD3D9AAF57AA684E290FC144FDB01A5BA47274DDA8CAFF50960EAD58781704059F2B029CD096D76BECCF66BBE1F05",
+                "7389445FCF5A6318C06001CB53EC083631E6EBF23D42CCD932341A10100A7B65573624107AAA2574B140AEF8A4A4BB116F54886DB3C964DE11A106EE0D38A1D2CC82E81D9463732D48194346AEF320A42A59AB9464ECF14B7D1033C18514A535580EEAD3C4F68F91E8564F57723EF0B19D06C918551D67ABB31757817EC96F074C4B48AC5E66665EBD12066946A68102FC044121E04AE18161760543D3944C26F2449491FA407D99ADB99F9142E13E66DA8AD344A0238FEAF34C4F32A859D30E11903566530FD66D6888FD11936FDCB7509D1CF3193914780171179BB0A77A03",
+                "",
+                "7389445FCF5A6318C06001CB53EC083631E6EBF23D42CCD932341A10100A7B65573624107AAA2574B140AEF8A4A4BB116F54886DB3C964DE11A106EE0D38A1D2CC82E81D9463732D48194346AEF320A42A59AB9464ECF14B7D1033C18514A535580EEAD3C4F68F91E8564F57723EF0B19D06C918551D67ABB31757817EC96F07"
+            ],
+            "validTestCases": [
+                {
+                    "tcId": 1,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 2
+                    },
+                    "expectedCmsg1": "F759A1B82DA70CD4FBF479150DD7964F1625276B5A3DBAE86128A5CC4C5E70E97389445FCF5A6318C06001CB53EC083631E6EBF23D42CCD932341A10100A7B65B6E7CCA235B80B3FF0C927482A4A670CE43200F75B40CB5094F3FBFE392D35C5A5848DE2B9AF67BD70561371068E953FC3D59DBA3F23A9435DDCFC935C6E1CDFC4DD54D89074CED372A4C27D17454F10CE0B7E6B053562066B2D779FF1C9E5438B3FE2227D24A9C2B2288FBB58B48384F05725E963FD014873AF7F71A7559D0BCC82E81D9463732D48194346AEF320A42A59AB9464ECF14B7D1033C18514A535580EEAD3C4F68F91E8564F57723EF0B19D06C918551D67ABB31757817EC96F07D73508C09CBEB65E054CF20BE3656D247C13203E8E82A98C607D44F92BE166B3321C8C9F93BCEDD32010065724146F688A93B045A40A5907AA8732AC8580D80B2F4A5E9F961A7163EF86BFC78418F065746E2ED0D201272FD2F08C8AB73B09464C4B48AC5E66665EBD12066946A68102FC044121E04AE18161760543D3944C263B5F4C6F311764F141B9801D1FF118DE28B404B17F04F092E909641352221C23501996B449F33EC61A00AE7EAE3819DA9CBD50F8B7550583FBF95921B9E72E08D156A3A4F58A2A8E6F896EBCF49B490C722B5CA6621EA2B1A3BA2E58B2E72C049555C38E7435B28742F77B08E7A547C5C6E100313B15480930326F4CD9783109",
+                    "comment": "valid coordinator step1"
+                }
+            ],
+            "errorTestCases": [
+                {
+                    "tcId": 2,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 0
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value"
+                },
+                {
+                    "tcId": 3,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 4
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value t > n"
+                },
+                {
+                    "tcId": 4,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "0200000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 2
+                    },
+                    "comment": "hostpubkeys list contains an invalid value"
+                },
+                {
+                    "tcId": 5,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "DuplicateHostPubkeyError",
+                        "participantId1": 0,
+                        "participantId2": 2
+                    },
+                    "comment": "hostpubkeys list contains duplicate values"
+                },
+                {
+                    "tcId": 6,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "0100000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 2
+                    },
+                    "comment": "hostpubkeys list contains the identity"
+                },
+                {
+                    "tcId": 7,
+                    "pmsg1Indices": [
+                        0,
+                        1
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: fewer entries than participants"
+                },
+                {
+                    "tcId": 8,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        0
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: more entries than participants"
+                },
+                {
+                    "tcId": 9,
+                    "pmsg1Indices": [
+                        0,
+                        3,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "participant (id 1) message has an enc_shares list of invalid length"
+                },
+                {
+                    "tcId": 10,
+                    "pmsg1Indices": [
+                        4,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing simplpedpop participant message at index 0"
+                },
+                {
+                    "tcId": 11,
+                    "pmsg1Indices": [
+                        0,
+                        5,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing public nonce in pmsg1 (index 1)"
+                }
+            ]
+        },
+        {
+            "pmsg1Pool": [
+                "321947355DA5B3C1C3BBBEFFD67B773CF5FE3C562A1AED985937AE422A9B5E295895FB1F1E250A4F97E1F34D70695C5CFC1B8D1EDCE039BED2C6AB0FF61A5D15773EE8D00EB88A35860FAFE05B8FD7A154104428B2E4BC89E901B5968E976F069717AA2F10D9A81D28748C88A8403C4F5795A9049EAB46C402816BE99223B1BDCC20204AEC4EB5B017EBFE380EEFD2FB746354B99F2BE7BE3835227D76778701B4C2888E0916BF76ADD39FFF0803EB9C320F248ABF7BF7F6FA1CA3D1799D960AB767CB40C76FB8E5D5C04DDF8F6B8032C671301FF18AC5B4B4FC6FD27E882405",
+                "6D0E7DE17D4F37DC64BF08CC6C5B709F19221CB7699CF4BBD365903083CD403DA3A8FAFCFA6F97B479837C6671B09E041AB84B1B0283F0AE06C564A9D67851449C8EE1994A0571B2A997F79E50957183F5DF203E2BB4175D8538F353B8FDD00D855C8954CF9389F358628BD148B7402B98F766F5D5FC898D16038911F0D38A79FC7CF82E170D9F0ED53059A90D589DB3147D27801D4D9E04D086889506BD3A0F00FEE1769D13BE36E0529F9269C010A761F8C8C942398D58FCAF22F78F4B370ED2B5126B26372475E26BEA25A9C29A022D6DD0476D96400BF688F0A1216A5A07",
+                "449AC474C1895AD9D29131109E753103A9898D7A8D935D17928E53A13C1DADAE425E8615F7279BCCB804A62E9A6E0FAE5F5A4136A4DFC0B97482BDEB3AE809A6EAE3E04DBAFA31FE412B85EF0C9B0C3FBCCDA8B55F56EA7BADB0FE2BABE175040F9D6CDC121FCAFB7FDCCA4162D3D7758F08039EE30C8974460D75FD39BE566A698C0416755AFC316C55722F8BFF8F77C2A725834ACB95987FD56BA9514A9308E79798574B4799C30A2D9874235B44C31C966A65E770CA488D734090462CF60FEFDE0BDD3312406E900578C6D9387F0FB20C0B4831BBE757DAED9468278E7505",
+                "6D0E7DE17D4F37DC64BF08CC6C5B709F19221CB7699CF4BBD365903083CD403DA3A8FAFCFA6F97B479837C6671B09E041AB84B1B0283F0AE06C564A9D67851449C8EE1994A0571B2A997F79E50957183F5DF203E2BB4175D8538F353B8FDD00D855C8954CF9389F358628BD148B7402B98F766F5D5FC898D16038911F0D38A79FC7CF82E170D9F0ED53059A90D589DB3147D27801D4D9E04D086889506BD3A0F00FEE1769D13BE36E0529F9269C010A761F8C8C942398D58FCAF22F78F4B370E",
+                "",
+                "6D0E7DE17D4F37DC64BF08CC6C5B709F19221CB7699CF4BBD365903083CD403DA3A8FAFCFA6F97B479837C6671B09E041AB84B1B0283F0AE06C564A9D67851449C8EE1994A0571B2A997F79E50957183F5DF203E2BB4175D8538F353B8FDD00D"
+            ],
+            "validTestCases": [
+                {
+                    "tcId": 12,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 1
+                    },
+                    "expectedCmsg1": "321947355DA5B3C1C3BBBEFFD67B773CF5FE3C562A1AED985937AE422A9B5E296D0E7DE17D4F37DC64BF08CC6C5B709F19221CB7699CF4BBD365903083CD403D449AC474C1895AD9D29131109E753103A9898D7A8D935D17928E53A13C1DADAE5895FB1F1E250A4F97E1F34D70695C5CFC1B8D1EDCE039BED2C6AB0FF61A5D15773EE8D00EB88A35860FAFE05B8FD7A154104428B2E4BC89E901B5968E976F06A3A8FAFCFA6F97B479837C6671B09E041AB84B1B0283F0AE06C564A9D67851449C8EE1994A0571B2A997F79E50957183F5DF203E2BB4175D8538F353B8FDD00D425E8615F7279BCCB804A62E9A6E0FAE5F5A4136A4DFC0B97482BDEB3AE809A6EAE3E04DBAFA31FE412B85EF0C9B0C3FBCCDA8B55F56EA7BADB0FE2BABE175049717AA2F10D9A81D28748C88A8403C4F5795A9049EAB46C402816BE99223B1BD855C8954CF9389F358628BD148B7402B98F766F5D5FC898D16038911F0D38A790F9D6CDC121FCAFB7FDCCA4162D3D7758F08039EE30C8974460D75FD39BE566A445627325E533E9982D4D26EC84C21124C88A1BC07441B5C889116BCCE7E5509C1B017A3BDAAF1C0EB19E8C0D82A82DDB09D57B9E9254F98844006595015C4088B28F42B07560A717295B828346DBB2FA5EB0BAF8FDCED178573F5DCC780F401",
+                    "comment": "valid coordinator step1"
+                }
+            ],
+            "errorTestCases": [
+                {
+                    "tcId": 13,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 0
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value"
+                },
+                {
+                    "tcId": 14,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 4
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value t > n"
+                },
+                {
+                    "tcId": 15,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "0200000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 2
+                    },
+                    "comment": "hostpubkeys list contains an invalid value"
+                },
+                {
+                    "tcId": 16,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "DuplicateHostPubkeyError",
+                        "participantId1": 0,
+                        "participantId2": 2
+                    },
+                    "comment": "hostpubkeys list contains duplicate values"
+                },
+                {
+                    "tcId": 17,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "0100000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 2
+                    },
+                    "comment": "hostpubkeys list contains the identity"
+                },
+                {
+                    "tcId": 18,
+                    "pmsg1Indices": [
+                        0,
+                        1
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: fewer entries than participants"
+                },
+                {
+                    "tcId": 19,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        0
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: more entries than participants"
+                },
+                {
+                    "tcId": 20,
+                    "pmsg1Indices": [
+                        0,
+                        3,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "participant (id 1) message has an enc_shares list of invalid length"
+                },
+                {
+                    "tcId": 21,
+                    "pmsg1Indices": [
+                        4,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing simplpedpop participant message at index 0"
+                },
+                {
+                    "tcId": 22,
+                    "pmsg1Indices": [
+                        0,
+                        5,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 1
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing public nonce in pmsg1 (index 1)"
+                }
+            ]
+        },
+        {
+            "pmsg1Pool": [
+                "D5EA3F6BD0B4789081647172308A8A4DA6CC71723E519F7A1A6674ABFDAF4B66B761FC7473C15E2FECC5839C492A3E02B871CF154D3386D265003752D9D8848C6470055F5D189B37BC2DB23DDFD6362295E10A9AF0211FB861310E2C955913EA0EC4E6A81E09F69BEF429C891858216391895846D1C6081EFFA2A2E517EEFDCB1CC7D7D92F3E2AC88AFE7F758F1A33E8F504859DD45BE92255BB9C6487ED3C09FAB75A1B262FFE74DF5CA0F68B33432B59F02BC91025BD2034F9337BD140C421992AEDA86D9ADD9AE972DCE9612CD0142E733FCA430EC3C37A9E37BFA123DD0AA62B5C75A45AF87BDFEC80B73754EE2CB7E0805E10632A2DA17F8D33CFD4510D3873B1DF49A71027A3CEC3BD6E489623FA7D782109B3448B131F86F00AB26201",
+                "180B3B54A6F1D378DC28EAF813B4A6BF68DD91149A3C4A970033CC8F6FB44563B674754BEAAEB69B7AD7DA69D0E23770410928DA9F47F3EFE40C3353465A40E22A4D1CB555F0DD3972E9982E89C125BDF58B1D0FDC57F34EDC1566D535C7BDBD63087167BC5AC569E0C21D585676C0FBCBB5262C97BC25099D01412C056B6837791ED767B116EE8B8E1F2767FA047DE9107568458C4EF35A1468E77D9219AC0E1464E5B3F4B548D7CF5C5675C79DF913C486FAEF15AD159B1CAAE74103F6A55BFB5673B251ED98BDE26EB41B80B959838BEBCBDEF67ADD55AC1AB3EB04539003B8690F47052FB513C84D1F392F75D296E2407C4F188407B8F14932149772E107C5A4C923444653427A083CDC94F64A92D878B1C602D255345115B68082236A0C",
+                "AC89ED7D53666C37AEE5471BD2340894FA6CD5E13AFB1A6211CE1176780CFF6772D6EF350F197384BA18D22471E2FB179FEC0FFC467222C7AB4161A5C5CCF6EFFE1968B3536D21413EA0008DB4F5979733A3C62D1863E338A270DFA8587A94A425E744DF35825E9A9AB402F077AF31939842BB42800CA564BD7CF17765533CC6AA5EDA9278DDCC9D395D172CE548051BC6B483F4AAD8320DA3C8053B669FB10672750F0BC56F285D51952FCF87D6A2FCA8A6024309FBCA881EBA365CA6777D9242C33FDB6981C10FADCB7193F87BC746E3FEC1ED6CF51D2468406B7D5985D90115569C91912ECC1A42AFD6A74C5879284553234228B5E244652C94C0C46C990B505406503A631841C54032968197FA1AF969EC7733A6F1D15EF65235453CAF05",
+                "180B3B54A6F1D378DC28EAF813B4A6BF68DD91149A3C4A970033CC8F6FB44563B674754BEAAEB69B7AD7DA69D0E23770410928DA9F47F3EFE40C3353465A40E22A4D1CB555F0DD3972E9982E89C125BDF58B1D0FDC57F34EDC1566D535C7BDBD63087167BC5AC569E0C21D585676C0FBCBB5262C97BC25099D01412C056B6837791ED767B116EE8B8E1F2767FA047DE9107568458C4EF35A1468E77D9219AC0E1464E5B3F4B548D7CF5C5675C79DF913C486FAEF15AD159B1CAAE74103F6A55BFB5673B251ED98BDE26EB41B80B959838BEBCBDEF67ADD55AC1AB3EB04539003B8690F47052FB513C84D1F392F75D296E2407C4F188407B8F14932149772E107",
+                "",
+                "180B3B54A6F1D378DC28EAF813B4A6BF68DD91149A3C4A970033CC8F6FB44563B674754BEAAEB69B7AD7DA69D0E23770410928DA9F47F3EFE40C3353465A40E22A4D1CB555F0DD3972E9982E89C125BDF58B1D0FDC57F34EDC1566D535C7BDBD63087167BC5AC569E0C21D585676C0FBCBB5262C97BC25099D01412C056B6837791ED767B116EE8B8E1F2767FA047DE9107568458C4EF35A1468E77D9219AC0E"
+            ],
+            "validTestCases": [
+                {
+                    "tcId": 23,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 3
+                    },
+                    "expectedCmsg1": "D5EA3F6BD0B4789081647172308A8A4DA6CC71723E519F7A1A6674ABFDAF4B66180B3B54A6F1D378DC28EAF813B4A6BF68DD91149A3C4A970033CC8F6FB44563AC89ED7D53666C37AEE5471BD2340894FA6CD5E13AFB1A6211CE1176780CFF67C7898E7F9256CBC72D0A1C5CBABB72EC0420DF8CC850D846F24A48E3B52A3F7F1CD2A52FD67592AE951911C848F4D67C775899D330B122CFCF682B62B73DB25D0EC4E6A81E09F69BEF429C891858216391895846D1C6081EFFA2A2E517EEFDCB1CC7D7D92F3E2AC88AFE7F758F1A33E8F504859DD45BE92255BB9C6487ED3C0963087167BC5AC569E0C21D585676C0FBCBB5262C97BC25099D01412C056B6837791ED767B116EE8B8E1F2767FA047DE9107568458C4EF35A1468E77D9219AC0E25E744DF35825E9A9AB402F077AF31939842BB42800CA564BD7CF17765533CC6AA5EDA9278DDCC9D395D172CE548051BC6B483F4AAD8320DA3C8053B669FB106FAB75A1B262FFE74DF5CA0F68B33432B59F02BC91025BD2034F9337BD140C4211464E5B3F4B548D7CF5C5675C79DF913C486FAEF15AD159B1CAAE74103F6A55B72750F0BC56F285D51952FCF87D6A2FCA8A6024309FBCA881EBA365CA6777D92E970AAD90EA62510A3100BF6FB6712CA9C5DCD96A77EBE3D8FF9552800FC460099431C9406F254FA3CB08752F62D7CC2DE7420F0509C142AF8F553082BB4CC0060988BF6ADED69520C7B3A8DA6DCFCBBCB6016603F2B8C91C32A8FA6D2117C03",
+                    "comment": "valid coordinator step1"
+                }
+            ],
+            "errorTestCases": [
+                {
+                    "tcId": 24,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 0
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value"
+                },
+                {
+                    "tcId": 25,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 4
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value t > n"
+                },
+                {
+                    "tcId": 26,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "0200000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 2
+                    },
+                    "comment": "hostpubkeys list contains an invalid value"
+                },
+                {
+                    "tcId": 27,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "DuplicateHostPubkeyError",
+                        "participantId1": 0,
+                        "participantId2": 2
+                    },
+                    "comment": "hostpubkeys list contains duplicate values"
+                },
+                {
+                    "tcId": 28,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "0100000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 2
+                    },
+                    "comment": "hostpubkeys list contains the identity"
+                },
+                {
+                    "tcId": 29,
+                    "pmsg1Indices": [
+                        0,
+                        1
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: fewer entries than participants"
+                },
+                {
+                    "tcId": 30,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        0
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: more entries than participants"
+                },
+                {
+                    "tcId": 31,
+                    "pmsg1Indices": [
+                        0,
+                        3,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "participant (id 1) message has an enc_shares list of invalid length"
+                },
+                {
+                    "tcId": 32,
+                    "pmsg1Indices": [
+                        4,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing simplpedpop participant message at index 0"
+                },
+                {
+                    "tcId": 33,
+                    "pmsg1Indices": [
+                        0,
+                        5,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D"
+                        ],
+                        "t": 3
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing public nonce in pmsg1 (index 1)"
+                }
+            ]
+        },
+        {
+            "pmsg1Pool": [
+                "24398C8DDC3DC3C66813561087BF9D0B50BBDAFBB19D33774391DC62E6A7AE31C2341A31BE521D6F5AF5E05E171322584CE3E66C8DA850F75240546E1245E1461C12F18AEE709521A7E2395EE3D2892650FF6447335F13B9B22A9717FAC077A0DBEC29D21CD7B8F8EA7549548A6CB4A5FFFF884005865F9615FA1B2378844E0E3A650929B32E2461E214AA29F861B70A5688CDA1F19A58F59CBFABEAD339A6D8AE369A7871DD7EEA5A5D9FD57B3CA3B96171B49F963A7A1736544754C787490DF77A62B793D4CBE29A833EEBC64A64B459B7B2F4CF804A1080763C9EA003800F7D6523EAA748C37F6416657CCB0BB87D5B48A2449EFE011039B1A729CFFF160DB57A907B0FAC0161AC73064E5B62F5D4EC128A1EAF55B5D064136678D2B02E0F",
+                "91A83582E6EC22A133D40E52EA803B26C236AC872F17CCDBF39C4991A53E88A9E3A375AF18F6DD10E36D11B9AEE23292820631875BD0ADA99DF62B0277CAB2E8D75157DFF7E3851F344001DDB40DFCA331AB14C7FB110413ABAE77E9BC52AD27B7148DC3432FD030332A8309C1C86FA0AA4DC4471479CA81239F7FA25A45BB0FB4FC4D6A70AF493BE82E9C226CEB36CDC2F9833FDF57063C51B7AEEA56DCC9564B6C66F95763907FE3B958C90088748273FF8AE5E8DC68B5A708424085DD6E0D3FD9F5E6ED07E466A0F36DEFBC92501BA90F83C97A6CF0F7E44A03CDB51A0F0262F8FA2CB1F75DF7F0A7791C6C25DF1C56B600130245E9D7EC605AFC7F34A20C1F612EE1323387E888FD095F3F519EB1A294EB13D3D87E63B0A0DC51297CA002",
+                "BDC0301FC5F66FE49812513A52DA4E316A80BC1C5C0CE0DEC7081CF9D902E5AA061C972595F180ADD716D3BA9D4D147FE57EE1C927502978FFF60789D3A70C808E81B1F5546089BA8ACCD2ECCF1947D0B7479D69811D31EB5E55EECACFE450034C54769FF2305D675C11F08C243DAEF681B8C9551E78F80359C7363A327C800BAA5A6D12ED2E58E44768A9DFD19FFE440EF9EAAE21624936074D2508A5861304DF477B776B699D76044D9A444B177307E253C3AEA3A2FACA9F8F2B496292CC0655244F514708C9BEB3DA8A9426707571B8EE07D4275C413FC67B6515CCCBF90F0ED7648CAB8E99EE060A6FA5457AE81EFC91D51AA928C7F963D376FC20CB41023631B6170F2B657D419DFA91666E12D9B66070876F1519A5AD92F6B3581AAC04",
+                "1E2BF3F5612BB469A58AD7FEC5623533965AD7BBF4FC960D99E95835C2D429B1DD9E3F03DCFD9F55F3CF7CAB6B8C8FE2F1D21C2C05D775D34AFE4D6ACF0E5B6ED803B30381AE6148A646B1C5D73BA74651A7683B6D66CE443F4372EEB33B4A63BCDC536188B7B89B39D04FECB3E1408C404EFF83454D65489B63F97543309C017FCEC72CE7CE8F1C0B3E8CC5ED68EB0BD52C584401B289491D5EAA4CEB0C8720544BD9CF1487FC1636545B8F4A267F7B726F890C467E744AC2FD0E16BB64CB0E72A0900351D30110AC1C9E90CB476B04B2B844D13E39D1EDFE7ADEDA47083C04F1ED2187ECF025CF0F3FE2558E34CB261338482215EE3D3BE61C6B7EE248BD0B27371FFC0C9A09A6FCFB55F3064A9220EF676537B074198944EC82CB8D9B4F0F",
+                "91A83582E6EC22A133D40E52EA803B26C236AC872F17CCDBF39C4991A53E88A9E3A375AF18F6DD10E36D11B9AEE23292820631875BD0ADA99DF62B0277CAB2E8D75157DFF7E3851F344001DDB40DFCA331AB14C7FB110413ABAE77E9BC52AD27B7148DC3432FD030332A8309C1C86FA0AA4DC4471479CA81239F7FA25A45BB0FB4FC4D6A70AF493BE82E9C226CEB36CDC2F9833FDF57063C51B7AEEA56DCC9564B6C66F95763907FE3B958C90088748273FF8AE5E8DC68B5A708424085DD6E0D3FD9F5E6ED07E466A0F36DEFBC92501BA90F83C97A6CF0F7E44A03CDB51A0F0262F8FA2CB1F75DF7F0A7791C6C25DF1C56B600130245E9D7EC605AFC7F34A20C",
+                "",
+                "91A83582E6EC22A133D40E52EA803B26C236AC872F17CCDBF39C4991A53E88A9E3A375AF18F6DD10E36D11B9AEE23292820631875BD0ADA99DF62B0277CAB2E8D75157DFF7E3851F344001DDB40DFCA331AB14C7FB110413ABAE77E9BC52AD27B7148DC3432FD030332A8309C1C86FA0AA4DC4471479CA81239F7FA25A45BB0F"
+            ],
+            "validTestCases": [
+                {
+                    "tcId": 34,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 2
+                    },
+                    "expectedCmsg1": "24398C8DDC3DC3C66813561087BF9D0B50BBDAFBB19D33774391DC62E6A7AE3191A83582E6EC22A133D40E52EA803B26C236AC872F17CCDBF39C4991A53E88A9BDC0301FC5F66FE49812513A52DA4E316A80BC1C5C0CE0DEC7081CF9D902E5AA1E2BF3F5612BB469A58AD7FEC5623533965AD7BBF4FC960D99E95835C2D429B19FCD6EA50FA4A2A75C1A872E437B5C34C75A9A05D9249C6AB80D965D7A9C8D671C12F18AEE709521A7E2395EE3D2892650FF6447335F13B9B22A9717FAC077A0DBEC29D21CD7B8F8EA7549548A6CB4A5FFFF884005865F9615FA1B2378844E0ED75157DFF7E3851F344001DDB40DFCA331AB14C7FB110413ABAE77E9BC52AD27B7148DC3432FD030332A8309C1C86FA0AA4DC4471479CA81239F7FA25A45BB0F8E81B1F5546089BA8ACCD2ECCF1947D0B7479D69811D31EB5E55EECACFE450034C54769FF2305D675C11F08C243DAEF681B8C9551E78F80359C7363A327C800BD803B30381AE6148A646B1C5D73BA74651A7683B6D66CE443F4372EEB33B4A63BCDC536188B7B89B39D04FECB3E1408C404EFF83454D65489B63F97543309C013A650929B32E2461E214AA29F861B70A5688CDA1F19A58F59CBFABEAD339A6D8B4FC4D6A70AF493BE82E9C226CEB36CDC2F9833FDF57063C51B7AEEA56DCC956AA5A6D12ED2E58E44768A9DFD19FFE440EF9EAAE21624936074D2508A58613047FCEC72CE7CE8F1C0B3E8CC5ED68EB0BD52C584401B289491D5EAA4CEB0C872065BA73A2FA0772EFF5E1068A76146D8029348C40693852E23FEAC3F3695C500023714C39E5F15568EE34E6B9B8A1D71B6D6E8263B1824D352AB8835B6AF2C405047BB970BCF9BB84BFCD404E4EEC8CB6C0C8C0945E5AF01C7002E4A05248B807579CA8B629DED2BCC6D071EC4A787A5635704BF1A1B866620733BC49E2E2CA05",
+                    "comment": "valid coordinator step1"
+                }
+            ],
+            "errorTestCases": [
+                {
+                    "tcId": 35,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 0
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value"
+                },
+                {
+                    "tcId": 36,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 5
+                    },
+                    "expectedError": {
+                        "type": "ThresholdOrCountError"
+                    },
+                    "comment": "invalid threshold value t > n"
+                },
+                {
+                    "tcId": 37,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "0200000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 3
+                    },
+                    "comment": "hostpubkeys list contains an invalid value"
+                },
+                {
+                    "tcId": 38,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "DuplicateHostPubkeyError",
+                        "participantId1": 0,
+                        "participantId2": 3
+                    },
+                    "comment": "hostpubkeys list contains duplicate values"
+                },
+                {
+                    "tcId": 39,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "0100000000000000000000000000000000000000000000000000000000000000"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "InvalidHostPubkeyError",
+                        "participantId": 3
+                    },
+                    "comment": "hostpubkeys list contains the identity"
+                },
+                {
+                    "tcId": 40,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: fewer entries than participants"
+                },
+                {
+                    "tcId": 41,
+                    "pmsg1Indices": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        0
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "invalid pmsgs1: more entries than participants"
+                },
+                {
+                    "tcId": 42,
+                    "pmsg1Indices": [
+                        0,
+                        4,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "participant (id 1) message has an enc_shares list of invalid length"
+                },
+                {
+                    "tcId": 43,
+                    "pmsg1Indices": [
+                        5,
+                        1,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing simplpedpop participant message at index 0"
+                },
+                {
+                    "tcId": 44,
+                    "pmsg1Indices": [
+                        0,
+                        6,
+                        2,
+                        3
+                    ],
+                    "params": {
+                        "hostpubkeys": [
+                            "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
+                            "70B0BDF7C936D395A4A6CE2955EF6708756F6CE452F56CA68E91B218EF7C4BBA",
+                            "63A0CADE31971F66A20081FF39674D82BA2E6403CEA8B8DB73AE64560C28698D",
+                            "CE1E3939569DA57D180FBEEE8EF3343964EA81AEBDACE497B75C42A90FFD8BF2"
+                        ],
+                        "t": 2
+                    },
+                    "expectedError": {
+                        "type": "ValueError"
+                    },
+                    "comment": "missing public nonce in pmsg1 (index 1)"
+                }
+            ]
+        }
+    ]
+}
