@@ -751,10 +751,14 @@ expansion: host keys are raw scalars so that a single signing construction
 *Arguments*:
 
 - `hostseckey` - This participant's long-term secret key (32 bytes).
-  The key **must** be 32 bytes of cryptographically secure randomness
-  with sufficient entropy to be unpredictable. All outputs of a
-  successful participant in a session can be recovered from (a backup
-  of) the key and per-session recovery data.
+  The key **must** be a uniformly random scalar in the range of `1` to
+  `L - 1`, encoded as 32 bytes in little-endian. To generate it, reduce
+  64 bytes of cryptographically secure randomness modulo `L`, or draw
+  32 random bytes repeatedly until their value lies in that range. Note
+  that 32 uniformly random bytes are a valid key only about 1 time in
+  16, so they cannot be used directly. All outputs of a successful
+  participant in a session can be recovered from (a backup of) the
+  key and per-session recovery data.
 
   The same host secret key (and thus the same host public key) can be
   used in multiple DKG sessions. A host public key can be correlated

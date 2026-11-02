@@ -385,7 +385,7 @@ def generate_recover_vectors():
     )
     # --- Error test case: hostseckey doesn't match any hostpubkey ---
     rand_hostseckey = bytes.fromhex(
-        "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9FE7"
+        "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9F07"
     )
     error = expect_exception(
         lambda: chilldkg.participant_recover(rand_hostseckey, crec),
