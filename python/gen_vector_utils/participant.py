@@ -263,7 +263,7 @@ def generate_participant_step1_group(t, n):
     )
     # --- Error test case: hostseckey doesn't match any hostpubkey ---
     rand_hostseckey = bytes.fromhex(
-        "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9FE7"
+        "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9F07"
     )
     error = expect_exception(
         lambda: chilldkg.participant_step1(rand_hostseckey, params, random),

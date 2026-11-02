@@ -790,7 +790,7 @@ def test_recovery_acknowledgment():
     # Wrong hostseckey
     try:
         chilldkg.participant_recovery_ack_sign(
-            random_bytes(32), recovery_data, params, random_bytes(32)
+            random_seckey(), recovery_data, params, random_bytes(32)
         )
     except chilldkg.HostSeckeyError:
         pass

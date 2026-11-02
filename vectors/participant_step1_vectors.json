@@ -248,7 +248,7 @@
                 },
                 {
                     "tcId": 14,
-                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9FE7",
+                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9F07",
                     "params": {
                         "hostpubkeys": [
                             "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
@@ -259,7 +259,8 @@
                     },
                     "random": "42B53D62E27380D6F7096EDA1C28C57DDB89FCD4CE5B843EDAC220E165B5A7EC",
                     "expectedError": {
-                        "type": "HostSeckeyError"
+                        "type": "HostSeckeyError",
+                        "message": "Host secret key does not match any host public key"
                     },
                     "comment": "host secret key doesn't match any hostpubkey"
                 },
@@ -532,7 +533,7 @@
                 },
                 {
                     "tcId": 30,
-                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9FE7",
+                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9F07",
                     "params": {
                         "hostpubkeys": [
                             "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
@@ -543,7 +544,8 @@
                     },
                     "random": "42B53D62E27380D6F7096EDA1C28C57DDB89FCD4CE5B843EDAC220E165B5A7EC",
                     "expectedError": {
-                        "type": "HostSeckeyError"
+                        "type": "HostSeckeyError",
+                        "message": "Host secret key does not match any host public key"
                     },
                     "comment": "host secret key doesn't match any hostpubkey"
                 },
@@ -816,7 +818,7 @@
                 },
                 {
                     "tcId": 46,
-                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9FE7",
+                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9F07",
                     "params": {
                         "hostpubkeys": [
                             "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
@@ -827,7 +829,8 @@
                     },
                     "random": "42B53D62E27380D6F7096EDA1C28C57DDB89FCD4CE5B843EDAC220E165B5A7EC",
                     "expectedError": {
-                        "type": "HostSeckeyError"
+                        "type": "HostSeckeyError",
+                        "message": "Host secret key does not match any host public key"
                     },
                     "comment": "host secret key doesn't match any hostpubkey"
                 },
@@ -1113,7 +1116,7 @@
                 },
                 {
                     "tcId": 62,
-                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9FE7",
+                    "hostseckey": "759DE9306FB02B3D84C455112BF1F3360401DC383ECD1FCEDE59EC809D6F9F07",
                     "params": {
                         "hostpubkeys": [
                             "270131D1A7DEE125AC55642FF707197CD405DD5B1FFF54137EC08B27DDFE3789",
@@ -1125,7 +1128,8 @@
                     },
                     "random": "42B53D62E27380D6F7096EDA1C28C57DDB89FCD4CE5B843EDAC220E165B5A7EC",
                     "expectedError": {
-                        "type": "HostSeckeyError"
+                        "type": "HostSeckeyError",
+                        "message": "Host secret key does not match any host public key"
                     },
                     "comment": "host secret key doesn't match any hostpubkey"
                 },
