@@ -194,7 +194,7 @@ Consequently, implementations **should not** expose the algorithms of the buildi
 ChillDKG operates on the edwards25519 curve and its prime-order subgroup, as specified in [RFC 8032](https://www.rfc-editor.org/rfc/rfc8032.html):
 
  - **Group.** The curve group has order `8 * L` for a prime `L`; all protocol values are points of the prime-order subgroup of order `L`. The identity element is the point `(0, 1)`, and the base point is denoted `B`.
- - **Point encoding.** A point is encoded in 32 bytes as specified in RFC 8032: the little-endian encoding of its y-coordinate, with the sign of the x-coordinate stored in the most significant bit of the last byte. There is a single point encoding, and the identity element is encodable like any other point. Two decoding modes are used: a *strict* mode that rejects non-canonical encodings, points outside the prime-order subgroup, and the identity element; and an *identity-accepting* mode that additionally accepts the canonical encoding of the identity element. Host public keys are decoded strictly, and the DKG output (the threshold public key and the public shares) is encoded strictly; the VSS commitments and the fields of the coordinator's aggregated messages use the identity-accepting mode.
+ - **Point encoding.** A point is encoded in 32 bytes as specified in RFC 8032: the little-endian encoding of its y-coordinate, with the sign of the x-coordinate stored in the most significant bit of the last byte. There is a single point encoding, and the identity element is encodable like any other point. Two decoding modes are used: a *strict* mode that rejects non-canonical encodings, points outside the prime-order subgroup, and the identity element; and an *identity-accepting* mode that additionally accepts the canonical encoding of the identity element. Host public keys are decoded strictly, and the DKG output (the threshold public key and the public shares) is encoded strictly. The VSS commitments, the coordinator's `coms_to_secrets` and `sum_coms_to_nonconst_terms`, and the `partial_pubshares` of an investigation message are decoded in the identity-accepting mode (see the note in [Section "DKG Protocol SimplPedPop"](#dkg-protocol-simplpedpop) for why); the per-participant public encryption nonces, which only the participants decode, the coordinator relaying them as received, and the `R` component of every internal signature (proofs of possession, CertEq signatures, recovery acknowledgments) are decoded strictly.
  - **Scalar encoding.** A scalar is an integer modulo `L`, encoded in 32 bytes in little-endian. Hash outputs are mapped to scalars by reducing the full 64-byte SHA-512 output modulo `L` ("wide reduction").
  - **Hashing.** All hashing uses SHA-512, domain-separated with tags: the tagged hash of `x` under an ASCII tag `tag` is `SHA512(SHA512(tag)[0:32] || x)`. Other integers (identifiers, lengths) are encoded in big-endian.
 
@@ -300,13 +300,13 @@ Our variant of the SimplPedPop protocol then works as follows:
     [Subsection "Background on Equality Checks"](#background-on-equality-checks).
 
 A note on point decoding (see [Section "Ed25519 Conventions"](#ed25519-conventions)):
-every point-valued message field, i.e., the individual VSS commitments, the coordinator's `coms_to_secrets` and `sum_coms_to_nonconst_terms`, and the `partial_pubshares` of an investigation message,
-is decoded with the identity-accepting variant.
+the individual VSS commitments, the coordinator's `coms_to_secrets` and `sum_coms_to_nonconst_terms`, and the `partial_pubshares` of an investigation message
+are decoded with the identity-accepting variant.
 A summed field such as `sum_coms_to_nonconst_terms` can legitimately cancel to the identity even though every summand is valid, so rejecting the identity at the serialization layer would reject valid data.
-A non-summed field could instead carry the identity because a malicious participant placed it there (e.g., by committing to a zero secret); decoding it rather than rejecting it is what preserves identifiable aborts, since the fault must be attributable to a specific participant at the protocol layer rather than surfacing anonymously as a decoding failure.
+The `coms_to_secrets` field, by contrast, carries one point per participant and could present the identity because that participant committed to a zero secret; decoding it rather than rejecting it is what preserves identifiable aborts, since the fault must be attributable to that participant or the coordinator at the protocol layer rather than surfacing anonymously as a decoding failure.
 Rejecting a forbidden identity is therefore left to the protocol layer:
-a `coms_to_secrets` entry equal to the identity is caught by an explicit check that blames the participant before its proof of possession is verified (an honest participant never commits to a zero secret),
-and an aggregate that yields an identity public share or threshold public key is refused when the DKG output is assembled, whose fields are encoded strictly.
+a `coms_to_secrets` entry equal to the identity is caught by an explicit check that blames the participant or the coordinator before the proof of possession is verified (an honest participant never commits to a zero secret, and the coordinator could have replaced the field in transit),
+and an aggregate that yields an identity public share or threshold public key is refused when the DKG output is assembled, whose fields are encoded strictly. Unlike the `coms_to_secrets` case, this refusal is an unattributed `ValueError` from the strict encoder and does not blame any specific participant.
 
 ### DKG Protocol EncPedPop
 
@@ -326,8 +326,8 @@ Deriving the nonce pair from the session seed, rather than directly and independ
 This will enable every pair of sending participant `i` and recipient participant `j != i`
 to perform an ECDH key exchange between the ephemeral encryption nonce pair of participant `i` and the static encryption key pair of participant `j`
 in order to establish a shared secret pad `pad_ij` only known to participants `i` and `j`.
-The derivation of `pad_ij` from the raw ECDH output uses a tagged hash and includes
-additional context, namely the identifier `j` of the recipient, the threshold `t`, and the static encryption keys of all `n` participants.[^mr-kem]
+The derivation of `pad_ij` from the raw ECDH output uses a tagged hash that further binds the sender's public encryption nonce and the recipient's static encryption key,
+along with additional context, namely the identifier `j` of the recipient, the threshold `t`, and the static encryption keys of all `n` participants.[^mr-kem]
 
 [^mr-kem]: This implements a multi-recipient multi-key key encapsulation mechanism (MR-MK-KEM) secure under the static Diffie-Hellman assumption [[Theorem 2, PPS14](https://doi.org/10.1145/2590296.2590329)].
 
@@ -444,8 +444,8 @@ The scheme is an EdDSA-style signature over the prime-order subgroup, but it is 
  - **The challenge is domain-separated, making internal signatures non-replayable.**
    The challenge is computed as the tagged hash `e = SHA-512(SHA-512(tag)[0:32] || bytes(R) || bytes(A) || m)` (with wide reduction), where the tag's 32-byte digest precedes the nonce point `R` and the public key `A`.
    Standard Ed25519 computes `e = SHA-512(bytes(R) || bytes(A) || m)`.
-   Since `R` and `A` are pinned by the signature and the key, no choice of message can make the two challenges coincide (that would require a SHA-512 collision), so an internal signature is structurally unverifiable as an ordinary Ed25519 signature, and vice versa.
-   In particular, a proof of possession or a CertEq signature can never be replayed as an ordinary signature of the host key on some message.
+   Since `R` and `A` are pinned by the signature and the key, the two hash inputs necessarily differ: the 32-byte tag digest is not a valid point encoding, so it cannot be substituted into the Ed25519 input by any choice of message. The two wide-reduced challenges can therefore only coincide by chance, with probability about `1/L` per message pair and bounded by `q_H / L` across the attacker's hash queries. An internal signature is unverifiable as an ordinary Ed25519 signature, and vice versa, except with that negligible probability.
+   In particular, a proof of possession or a CertEq signature cannot be replayed as an ordinary signature of the host key on some message.
    (Had the tag instead been prepended to the message only, the result would have been a valid Ed25519 signature on the prefixed message, which is exactly the property we do not want.)
  - **The nonce derivation is explicit.**
    Standard Ed25519 derives its deterministic nonce from a by-product of the seed-based key generation, which does not exist for ChillDKG's raw-scalar host keys (see [Subsection "Host Keys are Raw Scalars"](#host-keys-are-raw-scalars)).
@@ -729,7 +729,7 @@ Thus, applications may additionally choose to let the coordinator send all `n` i
 This subsection is an export of the API documentation generated from the docstrings in the reference implementation
 (see [`python/chilldkg_ref/chilldkg.py`](python/chilldkg_ref/chilldkg.py).)
 
-In addition to the exceptions documented for each function below, all public API functions may raise Python built-in exceptions such as `TypeError` or `ValueError` when called with arguments of unexpected structure (e.g., wrong type or wrong length). These structural errors are not documented per function.
+In addition to the exceptions documented for each function below, all public API functions may raise Python built-in exceptions such as `TypeError` or `ValueError` when called with arguments of unexpected structure (e.g., wrong type or wrong length). These structural errors are not documented per function. Separately, `participant_step2`, `coordinator_step1`, `participant_recover`, and `coordinator_recover` may also raise an unattributed `ValueError` on well-formed input when the assembled threshold public key or a public share would be the identity element, since the DKG output fields are encoded strictly (see [Section "Ed25519 Conventions"](#ed25519-conventions)).
 
 <!--pydoc.md-->
 #### hostpubkey\_gen
